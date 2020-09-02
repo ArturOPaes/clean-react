@@ -1,6 +1,6 @@
 {
   "name": "clean-react",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,9 @@
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage"
+    "test:ci": "npm test -- --coverage",
+    "check": "npm-check -u -s",
+    "eslint": "eslint 'src/**' --fix"
   },
   "keywords": [],
   "author": "Artur Paes",
