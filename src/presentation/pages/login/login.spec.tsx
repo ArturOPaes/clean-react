@@ -85,7 +85,7 @@ const testStatusForField = (
 ): void => {
   const emailStatus = sut.getByTestId(`${fieldName}-status`)
   expect(emailStatus.title).toBe(validationError || 'Tudo certo!')
-  expect(emailStatus.textContent).toBe(validationError ? '🔴' : '🟢')
+  expect(emailStatus.textContent).toBe(validationError ? '🔴' : '🥳')
 }
 
 const testErrorWrapChildCount = (sut: RenderResult, count: number): void => {
