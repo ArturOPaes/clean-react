@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/indent */
 import { AddAccount, AddAccountParams } from '@/domain/usecases'
 import { AccountModel } from '@/domain/models'
 import { HttpPostClient, HttpStatusCode } from '@/data/protocols/http'
 import { EmailInUseError, UnexpectedError } from '@/domain/errors'
 
 export class RemoteAddAccount implements AddAccount {
-  constructor (
+  constructor(
     private readonly url: string,
     private readonly httpPostClient: HttpPostClient<
       AddAccountParams,
@@ -13,7 +12,7 @@ export class RemoteAddAccount implements AddAccount {
     >
   ) {}
 
-  async add (params: AddAccountParams): Promise<AccountModel> {
+  async add(params: AddAccountParams): Promise<AccountModel> {
     const httpResponse = await this.httpPostClient.post({
       url: this.url,
       body: params

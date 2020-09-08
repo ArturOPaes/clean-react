@@ -22,6 +22,7 @@
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/indent": "off",
     "space-before-function-paren": "off",
     "@typescript-eslint/space-before-function-paren": "off"
   }

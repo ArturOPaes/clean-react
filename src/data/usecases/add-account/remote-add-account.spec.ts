@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import { RemoteAddAccount } from './remote-add-account'
 import { HttpPostClientSpy } from '@/data/test'
 import { AddAccountParams } from '@/domain/usecases'
