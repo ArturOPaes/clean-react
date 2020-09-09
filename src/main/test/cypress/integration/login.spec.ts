@@ -30,7 +30,7 @@ describe('Login', () => {
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })
 
-  it('Should present valid state if form is invalid', () => {
+  it('Should present valid state if form is valid', () => {
     cy.getByTestId('email').focus().type(faker.internet.email())
     FormHelper.testInputStatus('email', '')
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
