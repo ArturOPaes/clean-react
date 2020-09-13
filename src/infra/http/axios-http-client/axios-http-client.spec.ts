@@ -24,11 +24,13 @@ describe('AxiosHttpClient', () => {
       await sut.post(request)
       expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body)
     })
+
     test('Should return correct response on axios.post', () => {
       const { sut, mockedAxios } = makeSut()
       const promise = sut.post(mockPostRequest())
       expect(promise).toEqual(mockedAxios.post.mock.results[0].value)
     })
+
     test('Should return correct correct error on axios.post', () => {
       const { sut, mockedAxios } = makeSut()
       mockedAxios.post.mockRejectedValueOnce({
@@ -45,6 +47,16 @@ describe('AxiosHttpClient', () => {
       const { sut, mockedAxios } = makeSut()
       await sut.get(request)
       expect(mockedAxios.get).toHaveBeenCalledWith(request.url)
+    })
+
+    test('Should return correct response on axios.get', async () => {
+      const { sut, mockedAxios } = makeSut()
+      const httpResponse = await sut.post(mockGetRequest())
+      const axiosResponse = await mockedAxios.post.mock.results[0].value
+      expect(httpResponse).toEqual({
+        statusCode: axiosResponse.status,
+        body: axiosResponse.data
+      })
     })
   })
 })
