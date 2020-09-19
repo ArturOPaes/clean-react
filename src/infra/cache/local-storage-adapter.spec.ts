@@ -9,7 +9,7 @@ describe('LocalStorageAdapter', () => {
   beforeEach(() => {
     localStorage.clear()
   })
-  test('Should call localStorage with correct values', () => {
+  test('Should call localStorage.setitem with correct values', () => {
     const sut = makeSut()
     const key = faker.database.column()
     const value = faker.random.objectElement<AccountModel>()
@@ -18,5 +18,17 @@ describe('LocalStorageAdapter', () => {
       key,
       JSON.stringify(value)
     )
+  })
+
+  test('Should call localStorage.getItem with correct value', () => {
+    const sut = makeSut()
+    const key = faker.database.column()
+    const value = faker.random.objectElement<AccountModel>()
+    const getItemSpy = jest
+      .spyOn(localStorage, 'getItem')
+      .mockReturnValueOnce(JSON.stringify(value))
+    const obj = sut.get(key)
+    expect(obj).toEqual(value)
+    expect(getItemSpy).toHaveBeenCalledWith(key)
   })
 })
