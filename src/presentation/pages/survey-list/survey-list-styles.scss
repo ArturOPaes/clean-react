@@ -160,17 +160,7 @@
     .contentWrap {
       ul {
         flex-direction: column;
-
-        li {
-          flex-basis: 100%;
-        }
       }
     }
-  }
-}
-
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
   }
 }
