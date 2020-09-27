@@ -11,12 +11,17 @@ describe('SurveyList', () => {
   })
 
   it('Should present error on UnexpectedError', () => {
-    console.log(localStorage.getItem('account'))
     Http.mockUnexpectedError()
     cy.visit('')
     cy.getByTestId('error').should(
       'contain.text',
       'Algo de errado aconteceu. Tente novamente em breve.'
     )
+  })
+
+  it('Should logout on AccessDeniedError', () => {
+    Http.mockAccessDeniedError()
+    cy.visit('')
+    Helper.testUrl('/login')
   })
 })
