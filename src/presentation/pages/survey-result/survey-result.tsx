@@ -10,6 +10,7 @@ import FlipMove from 'react-flip-move'
 import Styles from './survey-result-styles.scss'
 import { LoadSurveyResult } from '@/domain/usecases'
 import { useErrorHandler } from '@/presentation/components/hooks'
+import { useHistory } from 'react-router-dom'
 
 type Props = {
   loadSurveyResult: LoadSurveyResult
@@ -33,6 +34,8 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
       reload: !old.reload,
       isLoading: false
     }))
+
+  const { goBack } = useHistory()
 
   useEffect(() => {
     loadSurveyResult
@@ -77,7 +80,9 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
                 </li>
               ))}
             </FlipMove>
-            <button>Voltar</button>
+            <button data-testid="back-button" onClick={goBack}>
+              Voltar
+            </button>
           </>
         )}
         {state.isLoading && <Loading />}
