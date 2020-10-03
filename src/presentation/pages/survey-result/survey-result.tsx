@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Footer, Header, Loading, Error } from '@/presentation/components'
 import Styles from './survey-result-styles.scss'
 import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases'
 import { useErrorHandler } from '@/presentation/components/hooks'
 import {
   SurveyResultData,
-  SurveyResultContext
+  surveyResultState,
+  onSurveyAnswerState
 } from '@/presentation/pages/survey-result/components'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 
 type Props = {
   loadSurveyResult: LoadSurveyResult
@@ -25,12 +27,8 @@ const SurveyResult: React.FC<Props> = ({
       isLoading: false
     }))
   })
-  const [state, setState] = useState({
-    isLoading: false,
-    error: '',
-    surveyResult: null as LoadSurveyResult.Model,
-    reload: false
-  })
+  const [state, setState] = useRecoilState(surveyResultState)
+  const setOnAnswer = useSetRecoilState(onSurveyAnswerState)
 
   const reload = (): void =>
     setState((old) => ({
@@ -60,18 +58,20 @@ const SurveyResult: React.FC<Props> = ({
       .catch(handleError)
   }, [state.reload])
 
+  useEffect(() => {
+    setOnAnswer({ onAnswer })
+  }, [])
+
   return (
     <div className={Styles.surveyResultWrap}>
       <Header />
-      <SurveyResultContext.Provider value={{ onAnswer }}>
-        <div data-testid="survey-result" className={Styles.contentWrap}>
-          {state.surveyResult && (
-            <SurveyResultData surveyResult={state.surveyResult} />
-          )}
-          {state.isLoading && <Loading />}
-          {state.error && <Error error={state.error} reload={reload} />}
-        </div>
-      </SurveyResultContext.Provider>
+      <div data-testid="survey-result" className={Styles.contentWrap}>
+        {state.surveyResult && (
+          <SurveyResultData surveyResult={state.surveyResult} />
+        )}
+        {state.isLoading && <Loading />}
+        {state.error && <Error error={state.error} reload={reload} />}
+      </div>
       <Footer />
     </div>
   )
