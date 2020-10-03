@@ -8,6 +8,7 @@ import faker from 'faker'
 import { EmailInUseError } from '@/domain/errors'
 import { ApiContext } from '@/presentation/contexts'
 import { AddAccount } from '@/domain/usecases'
+import { RecoilRoot } from 'recoil'
 
 type SutTypes = {
   addAccountSpy: AddAccountSpy
@@ -26,11 +27,13 @@ const makeSut = (params?: SutParams): SutTypes => {
   validationStub.errorMessage = params?.validationError
   const setCurrentAccountMock = jest.fn()
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
-      <Router history={history}>
-        <SignUp validation={validationStub} addAccount={addAccountSpy} />
-      </Router>
-    </ApiContext.Provider>
+    <RecoilRoot>
+      <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+        <Router history={history}>
+          <SignUp validation={validationStub} addAccount={addAccountSpy} />
+        </Router>
+      </ApiContext.Provider>
+    </RecoilRoot>
   )
   return {
     addAccountSpy,
